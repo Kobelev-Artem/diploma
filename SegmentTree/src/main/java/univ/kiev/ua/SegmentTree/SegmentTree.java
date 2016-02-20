@@ -7,8 +7,9 @@ public class SegmentTree {
 //	private int leftPos;
 //	private int rightPos;
 
-	protected SegmentTree() {}
+	public SegmentTree() {}
 	
+	//---BUILD TREE---
 	public static SegmentTree build(List<Long> values){
 		SegmentTree tree = new SegmentTree();
 		Segment segment = new Segment(1, values.size());
@@ -17,7 +18,7 @@ public class SegmentTree {
 		return tree;
 	}
 
-	private Node build(List<Long> values, Segment segment) { // int leftPos, int rightPos) {
+	protected Node build(List<Long> values, Segment segment) { // int leftPos, int rightPos) {
 		if (segment.isSingle()) {
 			return buildTreeLeaf(values, segment.getLeft());
 		}
@@ -51,6 +52,7 @@ public class SegmentTree {
 		return tree;
 	}
 
+	//---COUNT SUM---
 	public long sum(Segment segment) {
 //		this.leftPos = leftPos;
 //		this.rightPos = rightPos;
@@ -85,12 +87,13 @@ public class SegmentTree {
 		return leftSum + rightSum;
 	}
 
-	public void addToLeaf(int pos, int value) {
+	//---UPDATE TREE---
+	public void addToLeaf(int pos, long value) {
 		updateLeaf(node, pos, value);
 	}
 
-	private void updateLeaf(Node node, int pos, int value) {
-		if (node.isLeaf()) {
+	private void updateLeaf(Node node, int pos, long value) {
+		if (node.isLeaf() && node.getLeftPos() == pos) {
 			node.setValue(node.getValue() + value);
 			return;
 		}
@@ -100,11 +103,16 @@ public class SegmentTree {
 		node.updateValue();
 	}
 	
-	private void updateSubtree(Node node, int pos, int value) {
+	private void updateSubtree(Node node, int pos, long value) {
 		Node subtree = node.getSubtreeWhichContainsPos(pos);
 		updateLeaf(subtree, pos, value);
 	}
-
+	
+	//---OTHER METHODS---
+	public Node getLeafByPos(int pos){
+		return node.getLeafByPos(pos);
+	}
+	
 	public Node getNode() {
 		return node;
 	}
