@@ -14,7 +14,3 @@ hs_err_pid*
 *.project
 .settings/*
 target/*
-/SegmentTree/.settings/*
-SegmentTree/.settings/*
-/SegmentTree/target/*
-SegmentTree/target/*
